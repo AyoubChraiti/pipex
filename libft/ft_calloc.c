@@ -1,24 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/28 15:20:39 by achraiti          #+#    #+#             */
-/*   Updated: 2024/01/28 23:04:20 by achraiti         ###   ########.fr       */
+/*   Created: 2023/10/31 14:02:31 by achraiti          #+#    #+#             */
+/*   Updated: 2023/11/11 12:22:00 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "libft.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <string.h>
-# include <sys/wait.h>
-# include <fcntl.h>
-# include "libft/libft.h"
+void	*ft_calloc(size_t num_elmnt, size_t size)
+{
+	size_t	total_bytes;
+	void	*p;
 
-#endif
+	total_bytes = num_elmnt * size;
+	if (num_elmnt && size && num_elmnt > (MAX_SIZE / size))
+		return (NULL);
+	p = (void *)malloc(total_bytes);
+	if (!p)
+	{
+		return (NULL);
+	}
+	ft_bzero(p, total_bytes);
+	return (p);
+}

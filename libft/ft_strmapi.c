@@ -1,24 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/28 15:20:39 by achraiti          #+#    #+#             */
-/*   Updated: 2024/01/28 23:04:20 by achraiti         ###   ########.fr       */
+/*   Created: 2023/11/02 20:14:32 by achraiti          #+#    #+#             */
+/*   Updated: 2023/11/11 14:34:21 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "libft.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <string.h>
-# include <sys/wait.h>
-# include <fcntl.h>
-# include "libft/libft.h"
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
+{
+	int		i;
+	int		len;
+	char	*m;
 
-#endif
+	i = 0;
+	len = 0;
+	if (s == NULL || f == NULL)
+		return (NULL);
+	while (s[len])
+	{
+		len++;
+	}
+	m = (char *)malloc((sizeof(char)) * (len + 1));
+	if (!m)
+		return (NULL);
+	while (s[i])
+	{
+		m[i] = f(i, s[i]);
+		i++;
+	}
+	m[i] = '\0';
+	return (m);
+}

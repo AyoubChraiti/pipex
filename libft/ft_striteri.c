@@ -1,29 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/28 15:20:46 by achraiti          #+#    #+#             */
-/*   Updated: 2024/02/01 14:06:35 by achraiti         ###   ########.fr       */
+/*   Created: 2023/11/03 10:55:08 by achraiti          #+#    #+#             */
+/*   Updated: 2023/11/11 14:54:22 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-int main (int ac, char **av, char **env)
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
-	 char cmd[] = "/bin/ls";
-	 char *const args[] = {"/bin/ls", "-la"};
+	unsigned int	i;
 
-	 if(execve(cmd,args,env) == -1)
-	 {
-		 printf("error");
-		 exit(1);
-	 }
-	 printf("hello");
-	 while(1)
-	 {}
-	return 0;
+	i = 0;
+	if (s == NULL || f == NULL)
+		return ;
+	while (s[i])
+	{
+		f(i, &s[i]);
+		i++;
+	}
 }
+
+// void ft_fon(unsigned int i, char *s)
+// {
+// 	while(s[i])
+// 	{
+// 		s[i] = ft_toupper(s[i]);
+// 		i++;
+// 	}
+// }
+//
+// int main()
+// {
+// 	char x[] = "ayoub";
+// 	ft_striteri(x, ft_fon);
+// 	printf("%s\n", x);
+// }
