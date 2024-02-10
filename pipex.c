@@ -6,7 +6,7 @@
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 15:20:41 by achraiti          #+#    #+#             */
-/*   Updated: 2024/01/31 15:19:36 by achraiti         ###   ########.fr       */
+/*   Updated: 2024/02/10 18:34:47 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,15 @@
 
 int main(int argc, char **argv, char **envp)
 {
-    (void) argc;
-    (void) argv;
-    (void) envp;
-    int n;
-    int i = fork();
-    if(i == 0)
-        n = 0;
-    else
-        n = 10;
-    int k = 0;
-    if(i != 0)
-        wait(NULL);
-    printf("i = %d\n", i);
-    if(i != 0)
-        k = 10;
-    while(k <= 20)
-        printf("k = %d\n", k++);
-    printf("finished\n");
+    (void)argc;
+    (void)argv;
+    (void)envp;
+    char *env[] = { NULL };
+    char *d[] = { "ls",  NULL };
+    int x = fork();
+    printf("%d\n", getgid());
+    if(x == 0)
+        execve("/usr/bin/ls", d, env);
+    printf("%d\n", getgid());;
+    return 1;
 }
