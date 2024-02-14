@@ -6,7 +6,7 @@
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 15:20:41 by achraiti          #+#    #+#             */
-/*   Updated: 2024/02/14 12:44:38 by achraiti         ###   ########.fr       */
+/*   Updated: 2024/02/14 15:08:58 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ int main(int argc, char **argv, char **env)
         printf("error opening the files\n");
 	
     pipe(fd);
-    
+    id1 = fork();
 	if(id1 == 0)
 	{
         close(fd[0]);
         dup2(fd_a, 0);
         dup2(fd[1], 1);
-		char *const x[] = {"/usr/bin/cat", NULL};
-		execve("/usr/bin/cat", x, env);
+		char *const x[] = {"/bin/ls", "-l", NULL};
+		execve("/bin/ls", x, env);
         write(2, "error in execve\n", 17);
         exit(1);
 	}
@@ -43,11 +43,10 @@ int main(int argc, char **argv, char **env)
         close(fd[1]);
         dup2(fd_b, 1);
         dup2(fd[0], 0);
-        char *const p[] = {"/usr/bin/grep", "p", NULL};
-        execve("/usr/bin/grep", p, env);
-        write(2, "error in execve\n", 17);
+        char *const c[] = {"/usr/bin/grep", "p", NULL};
+        execve("/usr/bin/grep", c, NULL);
+        printf("Error executing grep\n");
         exit(1);
     }
-    wait(NULL);
     return 0;
 }
