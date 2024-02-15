@@ -6,25 +6,31 @@
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 15:20:41 by achraiti          #+#    #+#             */
-/*   Updated: 2024/02/14 15:08:58 by achraiti         ###   ########.fr       */
+/*   Updated: 2024/02/15 15:15:04 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int main(int argc, char **argv, char **env)
+char    *get_path(char **argv, char **env)
 {
-	int     fd[2];
+    char    *path = &env[3][5];
+    char    **paths = ft_split(path, ':');
+    int i = 0;
+    while(paths[i] != NULL)
+    {
+        printf("%s\n", paths[i]);
+        i++;
+    }
+    return "hh";
+}
+
+void    pipex(int fd_a, int fd_b, char **argv, char **env)
+{
+    int     fd[2];
 	pid_t   id1;
     pid_t   id2;
-	int		fd_a;
-	int		fd_b;
 
-	fd_a = open(argv[1], O_CREAT | O_RDWR);
-	fd_b = open(argv[4], O_CREAT | O_RDWR);
-    if(fd_a == -1 || fd_b == -1)
-        printf("error opening the files\n");
-	
     pipe(fd);
     id1 = fork();
 	if(id1 == 0)
@@ -34,7 +40,7 @@ int main(int argc, char **argv, char **env)
         dup2(fd[1], 1);
 		char *const x[] = {"/bin/ls", "-l", NULL};
 		execve("/bin/ls", x, env);
-        write(2, "error in execve\n", 17);
+        perror("Error");
         exit(1);
 	}
     id2 = fork();
@@ -45,8 +51,21 @@ int main(int argc, char **argv, char **env)
         dup2(fd[0], 0);
         char *const c[] = {"/usr/bin/grep", "p", NULL};
         execve("/usr/bin/grep", c, NULL);
-        printf("Error executing grep\n");
+        perror("Error");
         exit(1);
     }
+}
+
+int main(int argc, char **argv, char **env)
+{
+	// int		fd_a;
+	// int		fd_b;
+
+	// fd_a = open(argv[1], O_CREAT | O_RDWR);
+	// fd_b = open(argv[4], O_CREAT | O_RDWR);
+    // if(fd_a == -1 || fd_b == -1)
+    //     perror("Files Error");
+	// pipex(fd_a, fd_b, argv, env);
+    get_path(argv, env);
     return 0;
 }
