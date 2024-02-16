@@ -6,13 +6,13 @@
 #    By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/28 15:25:20 by achraiti          #+#    #+#              #
-#    Updated: 2024/02/16 14:27:49 by achraiti         ###   ########.fr        #
+#    Updated: 2024/02/16 14:33:57 by achraiti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = pipex
 
-SRC = pipex.c
+SRC = pipex.c pipex_utils.c
 
 OBJ = $(SRC:.c=.o)
 
