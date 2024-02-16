@@ -6,7 +6,7 @@
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 15:20:41 by achraiti          #+#    #+#             */
-/*   Updated: 2024/02/16 20:52:47 by achraiti         ###   ########.fr       */
+/*   Updated: 2024/02/16 23:44:46 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 char	*get_path(t_list *x, int t)
 {
 	char	*try;
+	char	*tmp;
 	int		i;
 
 	i = 0;
@@ -23,7 +24,9 @@ char	*get_path(t_list *x, int t)
 	x->cmd = ft_split(x->argv[t], ' ');
 	while (x->paths[i] != NULL)
 	{
-		x->paths[i] = ft_strjoin(x->paths[i], "/");
+		tmp = ft_strjoin(x->paths[i], "/");
+		free(x->paths[i]);
+		x->paths[i] = tmp;
 		i++;
 	}
 	i = 0;
@@ -79,6 +82,7 @@ void	pipex(t_list *x)
 	if (x->id1 == -1)
 		ft_exit("Fork Error");
 	execve_exe(x);
+	return (free(x->path1), free(x->path2));
 }
 
 int	main(int argc, char **argv, char **env)
