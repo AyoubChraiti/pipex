@@ -6,7 +6,7 @@
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 14:28:46 by achraiti          #+#    #+#             */
-/*   Updated: 2024/02/16 20:15:47 by achraiti         ###   ########.fr       */
+/*   Updated: 2024/02/16 20:52:55 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,10 @@ char	**cmd_arguments(char **argv, int t)
 
 	sp = ft_split(argv[t], ' ');
 	return (sp + 1);
+}
+
+void	ft_exit(char *err_msg)
+{
+	perror(err_msg);
+	exit(EXIT_FAILURE);
 }

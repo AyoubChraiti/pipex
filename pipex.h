@@ -6,7 +6,7 @@
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 15:20:39 by achraiti          #+#    #+#             */
-/*   Updated: 2024/02/16 20:35:12 by achraiti         ###   ########.fr       */
+/*   Updated: 2024/02/16 20:53:13 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 
 char	*get_env(char **env);
 char	**cmd_arguments(char **argv, int t);
+void	ft_exit(char *err_msg);
 
 typedef struct s_list
 {

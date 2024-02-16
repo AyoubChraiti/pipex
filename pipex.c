@@ -6,17 +6,11 @@
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 15:20:41 by achraiti          #+#    #+#             */
-/*   Updated: 2024/02/16 20:47:31 by achraiti         ###   ########.fr       */
+/*   Updated: 2024/02/16 20:52:47 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-void	ft_exit(char *err_msg)
-{
-	perror(err_msg);
-	exit(EXIT_FAILURE);
-}
 
 char	*get_path(t_list *x, int t)
 {
