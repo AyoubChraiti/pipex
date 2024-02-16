@@ -1,4 +1,14 @@
--rwxr-xr-x 1 achraiti 4221 16400 Feb 15 14:37 pipex
--rw-r--r-- 1 achraiti 4221  1799 Feb 15 14:37 pipex.c
--rw-r--r-- 1 achraiti 4221  1085 Feb 10 17:57 pipex.h
--rw-r--r-- 1 achraiti 4221  3080 Feb 15 14:37 pipex.o
+total 80
+drwxr-xr-x  13 achraiti  candidates    442 Feb 15 22:31 .
+drwxr-xr-x  13 achraiti  candidates    442 Feb 15 17:21 ..
+drwxr-xr-x  12 achraiti  candidates    408 Feb 15 17:22 .git
+drwxr-xr-x   5 achraiti  candidates    170 Feb 15 17:22 .vscode
+-rw-r--r--   1 achraiti  candidates   1286 Feb 15 17:22 Makefile
+-rw-r--r--   1 achraiti  candidates      8 Feb 15 17:22 README.md
+-rwxrwxrwx   1 achraiti  candidates      0 Feb 15 17:22 infile
+drwxr-xr-x  93 achraiti  candidates   3162 Feb 15 20:17 libft
+-rwxrwxrwx   1 achraiti  candidates    583 Feb 15 22:30 outfile
+-rwxr-xr-x   1 achraiti  candidates  13748 Feb 15 22:31 pipex
+-rw-r--r--   1 achraiti  candidates   2916 Feb 15 22:31 pipex.c
+-rw-r--r--   1 achraiti  candidates   1085 Feb 15 17:22 pipex.h
+-rw-r--r--   1 achraiti  candidates   3320 Feb 15 22:31 pipex.o
