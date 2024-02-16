@@ -6,11 +6,17 @@
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 15:20:41 by achraiti          #+#    #+#             */
-/*   Updated: 2024/02/16 20:36:56 by achraiti         ###   ########.fr       */
+/*   Updated: 2024/02/16 20:47:31 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+void	ft_exit(char *err_msg)
+{
+	perror(err_msg);
+	exit(EXIT_FAILURE);
+}
 
 char	*get_path(t_list *x, int t)
 {
@@ -44,24 +50,24 @@ void	execve_exe(t_list *x)
 	{
 		close(x->fd[0]);
 		if (dup2(x->fd_a, 0) == -1)
-			perror("Dup2 Error");
+			ft_exit("Dup2 Error");
 		if (dup2(x->fd[1], 1) == -1)
-			perror("Dup2 Error");
+			ft_exit("Dup2 Error");
 		execve(x->path1, x->cmd1, x->env);
-		perror("Execve Error");
+		ft_exit("Execve Error");
 	}
 	x->id2 = fork();
 	if (x->id2 == -1)
-		perror("Fork Error");
+		ft_exit("Fork Error");
 	if (x->id2 == 0)
 	{
 		close(x->fd[1]);
 		if (dup2(x->fd_b, 1) == -1)
-			perror("Dup2 Error");
+			ft_exit("Dup2 Error");
 		if (dup2(x->fd[0], 0) == -1)
-			perror("Dup2 Error");
+			ft_exit("Dup2 Error");
 		execve(x->path2, x->cmd2, NULL);
-		perror("Execve Error");
+		ft_exit("Execve Error");
 	}
 }
 
@@ -74,10 +80,10 @@ void	pipex(t_list *x)
 	x->cmd1 = (char *const []){x->path1, *x->cmd_args1, NULL};
 	x->cmd2 = (char *const []){x->path2, *x->cmd_args2, NULL};
 	if (pipe(x->fd) == -1)
-		perror("Pipe Error");
+		ft_exit("Pipe Error");
 	x->id1 = fork();
 	if (x->id1 == -1)
-		perror("Fork Error");
+		ft_exit("Fork Error");
 	execve_exe(x);
 }
 
@@ -90,7 +96,7 @@ int	main(int argc, char **argv, char **env)
 	x.fd_a = open(argv[1], O_CREAT | O_RDWR, 0666);
 	x.fd_b = open(argv[4], O_CREAT | O_RDWR, 0666);
 	if (x.fd_a == -1 || x.fd_b == -1)
-		perror("Open Error");
+		ft_exit("Open Error");
 	x.argv = argv;
 	x.env = env;
 	pipex(&x);
