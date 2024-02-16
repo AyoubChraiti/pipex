@@ -6,33 +6,11 @@
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 15:20:41 by achraiti          #+#    #+#             */
-/*   Updated: 2024/02/16 19:11:30 by achraiti         ###   ########.fr       */
+/*   Updated: 2024/02/16 20:36:56 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-char	*get_env(char **env)
-{
-	int	i;
-
-	i = 0;
-	while (env[i])
-	{
-		if (ft_strncmp(env[i], "PATH=", 5) == 0)
-			return (env[i] + 5);
-		i++;
-	}
-	return (NULL);
-}
-
-char	**cmd_arguments(char **argv, int t)
-{
-	char	**sp;
-
-	sp = ft_split(argv[t], ' ');
-	return (sp + 1);
-}
 
 char	*get_path(t_list *x, int t)
 {
@@ -40,7 +18,6 @@ char	*get_path(t_list *x, int t)
 	int		i;
 
 	i = 0;
-	x->flag = 0;
 	x->path_var = get_env(x->env);
 	x->paths = ft_split(x->path_var, ':');
 	x->cmd = ft_split(x->argv[t], ' ');
@@ -54,16 +31,38 @@ char	*get_path(t_list *x, int t)
 	{
 		try = ft_strjoin(x->paths[i], x->cmd[0]);
 		if (access(try, F_OK | X_OK) == 0)
-		{
-			x->flag = 1;
-			break ;
-		}
+			return (try);
 		free(try);
 		i++;
 	}
-	if (x->flag)
-		return (try);
 	return (x->cmd[0]);
+}
+
+void	execve_exe(t_list *x)
+{
+	if (x->id1 == 0)
+	{
+		close(x->fd[0]);
+		if (dup2(x->fd_a, 0) == -1)
+			perror("Dup2 Error");
+		if (dup2(x->fd[1], 1) == -1)
+			perror("Dup2 Error");
+		execve(x->path1, x->cmd1, x->env);
+		perror("Execve Error");
+	}
+	x->id2 = fork();
+	if (x->id2 == -1)
+		perror("Fork Error");
+	if (x->id2 == 0)
+	{
+		close(x->fd[1]);
+		if (dup2(x->fd_b, 1) == -1)
+			perror("Dup2 Error");
+		if (dup2(x->fd[0], 0) == -1)
+			perror("Dup2 Error");
+		execve(x->path2, x->cmd2, NULL);
+		perror("Execve Error");
+	}
 }
 
 void	pipex(t_list *x)
@@ -79,25 +78,7 @@ void	pipex(t_list *x)
 	x->id1 = fork();
 	if (x->id1 == -1)
 		perror("Fork Error");
-	if (x->id1 == 0)
-	{
-		close(x->fd[0]);
-		dup2(x->fd_a, 0);
-		dup2(x->fd[1], 1);
-		execve(x->path1, x->cmd1, x->env);
-		perror("Execve Error");
-	}
-	x->id2 = fork();
-	if (x->id2 == -1)
-		perror("Fork Error");
-	if (x->id2 == 0)
-	{
-		close(x->fd[1]);
-		dup2(x->fd_b, 1);
-		dup2(x->fd[0], 0);
-		execve(x->path2, x->cmd2, NULL);
-		perror("Execve Error");
-	}
+	execve_exe(x);
 }
 
 int	main(int argc, char **argv, char **env)
@@ -109,9 +90,7 @@ int	main(int argc, char **argv, char **env)
 	x.fd_a = open(argv[1], O_CREAT | O_RDWR, 0666);
 	x.fd_b = open(argv[4], O_CREAT | O_RDWR, 0666);
 	if (x.fd_a == -1 || x.fd_b == -1)
-	{
 		perror("Open Error");
-	}
 	x.argv = argv;
 	x.env = env;
 	pipex(&x);
