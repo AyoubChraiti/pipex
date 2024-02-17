@@ -6,7 +6,7 @@
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 15:20:41 by achraiti          #+#    #+#             */
-/*   Updated: 2024/02/16 23:44:46 by achraiti         ###   ########.fr       */
+/*   Updated: 2024/02/17 14:07:48 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,8 @@ int	main(int argc, char **argv, char **env)
 
 	if (argc != 5)
 		exit(EXIT_FAILURE);
-	x.fd_a = open(argv[1], O_CREAT | O_RDWR, 0666);
-	x.fd_b = open(argv[4], O_CREAT | O_RDWR, 0666);
+	x.fd_a = open(argv[1], O_CREAT | O_RDONLY, 0666);
+	x.fd_b = open(argv[4], O_CREAT | O_WRONLY, 0666);
 	if (x.fd_a == -1 || x.fd_b == -1)
 		ft_exit("Open Error");
 	x.argv = argv;
