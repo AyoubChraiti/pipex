@@ -6,7 +6,7 @@
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 15:20:41 by achraiti          #+#    #+#             */
-/*   Updated: 2024/02/17 20:53:20 by achraiti         ###   ########.fr       */
+/*   Updated: 2024/02/18 22:05:42 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,24 @@ void	pipex(t_list *x)
 	return (free(x->path1), free(x->path2));
 }
 
+int	ft_wait(t_list *x)
+{
+	int	status1;
+	int	status2;
+	int	res;
+
+	res = 0;
+	waitpid(x->id1, &status1, 0);
+	waitpid(x->id2, &status2, 0);
+	if (WEXITSTATUS(status1) || WEXITSTATUS(status2))
+		res = WEXITSTATUS(status1) + WEXITSTATUS(status2);
+	return (res);
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	t_list	x;
-	int		status;
+	int		exit_status;
 
 	if (argc != 5)
 		exit(EXIT_FAILURE);
@@ -70,7 +84,9 @@ int	main(int argc, char **argv, char **env)
 	x.argv = argv;
 	x.env = env;
 	pipex(&x);
-	status = ft_wait(&x);
-	printf("wait status----------->%d\n", status);
-	return (status);
+	close(x.fd[0]);
+    close(x.fd[1]);
+	exit_status = ft_wait(&x);
+	system("leaks pipex");
+	return (exit_status);
 }

@@ -1,0 +1,12 @@
+total 96
+-rw-r--r--   1 achraiti  candidates   1299 Feb 18 21:38 Makefile
+-rw-r--r--   1 achraiti  candidates      8 Feb 18 21:38 README.md
+-rw-r--r--   1 achraiti  candidates      0 Feb 18 21:38 infile
+drwxr-xr-x  93 achraiti  candidates   3162 Feb 18 22:01 libft
+-rw-r--r--   1 achraiti  candidates    723 Feb 18 22:05 outfile
+-rwxr-xr-x   1 achraiti  candidates  13736 Feb 18 22:05 pipex
+-rw-r--r--   1 achraiti  candidates   2549 Feb 18 22:05 pipex.c
+-rw-r--r--   1 achraiti  candidates   1498 Feb 18 21:38 pipex.h
+-rw-r--r--   1 achraiti  candidates   2804 Feb 18 22:05 pipex.o
+-rw-r--r--   1 achraiti  candidates   1739 Feb 18 21:38 pipex_utils.c
+-rw-r--r--   1 achraiti  candidates   1900 Feb 18 22:01 pipex_utils.o
