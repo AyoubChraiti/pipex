@@ -6,7 +6,7 @@
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 15:20:39 by achraiti          #+#    #+#             */
-/*   Updated: 2024/02/16 20:53:13 by achraiti         ###   ########.fr       */
+/*   Updated: 2024/02/17 19:10:29 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,6 @@
 # include <sys/wait.h>
 # include <fcntl.h>
 # include "libft/libft.h"
-
-char	*get_env(char **env);
-char	**cmd_arguments(char **argv, int t);
-void	ft_exit(char *err_msg);
 
 typedef struct s_list
 {
@@ -41,8 +37,13 @@ typedef struct s_list
 	char		*path_var;
 	char		**paths;
 	char		**cmd;
-	char *const	*cmd1;
-	char *const	*cmd2;
+	char		**cmd1;
+	char		**cmd2;
 }			t_list;
+
+char	*get_env(char **env);
+char	**cmd_arguments(char **argv, int t);
+void	ft_exit(char *err_msg);
+char	*get_path(t_list *x, int t);
 
 #endif

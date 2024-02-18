@@ -6,40 +6,11 @@
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 15:20:41 by achraiti          #+#    #+#             */
-/*   Updated: 2024/02/17 14:07:48 by achraiti         ###   ########.fr       */
+/*   Updated: 2024/02/17 20:53:20 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-char	*get_path(t_list *x, int t)
-{
-	char	*try;
-	char	*tmp;
-	int		i;
-
-	i = 0;
-	x->path_var = get_env(x->env);
-	x->paths = ft_split(x->path_var, ':');
-	x->cmd = ft_split(x->argv[t], ' ');
-	while (x->paths[i] != NULL)
-	{
-		tmp = ft_strjoin(x->paths[i], "/");
-		free(x->paths[i]);
-		x->paths[i] = tmp;
-		i++;
-	}
-	i = 0;
-	while (x->paths[i] != NULL)
-	{
-		try = ft_strjoin(x->paths[i], x->cmd[0]);
-		if (access(try, F_OK | X_OK) == 0)
-			return (try);
-		free(try);
-		i++;
-	}
-	return (x->cmd[0]);
-}
 
 void	execve_exe(t_list *x)
 {
@@ -74,8 +45,8 @@ void	pipex(t_list *x)
 	x->path2 = get_path(x, 3);
 	x->cmd_args1 = cmd_arguments(x->argv, 2);
 	x->cmd_args2 = cmd_arguments(x->argv, 3);
-	x->cmd1 = (char *const []){x->path1, *x->cmd_args1, NULL};
-	x->cmd2 = (char *const []){x->path2, *x->cmd_args2, NULL};
+	x->cmd1 = cmd_arguments(x->argv, 2);
+	x->cmd2 = cmd_arguments(x->argv, 3);
 	if (pipe(x->fd) == -1)
 		ft_exit("Pipe Error");
 	x->id1 = fork();
@@ -88,6 +59,7 @@ void	pipex(t_list *x)
 int	main(int argc, char **argv, char **env)
 {
 	t_list	x;
+	int		status;
 
 	if (argc != 5)
 		exit(EXIT_FAILURE);
@@ -98,5 +70,7 @@ int	main(int argc, char **argv, char **env)
 	x.argv = argv;
 	x.env = env;
 	pipex(&x);
-	return (0);
+	status = ft_wait(&x);
+	printf("wait status----------->%d\n", status);
+	return (status);
 }
