@@ -6,7 +6,7 @@
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 15:20:39 by achraiti          #+#    #+#             */
-/*   Updated: 2024/02/17 19:10:29 by achraiti         ###   ########.fr       */
+/*   Updated: 2024/02/18 22:59:15 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ typedef struct s_list
 	char		**env;
 	char		*path1;
 	char		*path2;
-	char		**cmd_args1;
-	char		**cmd_args2;
 	char		*path_var;
 	char		**paths;
 	char		**cmd;
@@ -45,5 +43,6 @@ char	*get_env(char **env);
 char	**cmd_arguments(char **argv, int t);
 void	ft_exit(char *err_msg);
 char	*get_path(t_list *x, int t);
+void	ft_free(char **s, int f);
 
 #endif

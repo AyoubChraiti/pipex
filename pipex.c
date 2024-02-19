@@ -6,7 +6,7 @@
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 15:20:41 by achraiti          #+#    #+#             */
-/*   Updated: 2024/02/18 22:05:42 by achraiti         ###   ########.fr       */
+/*   Updated: 2024/02/19 14:08:11 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,18 @@ void	execve_exe(t_list *x)
 	}
 }
 
+void	free_all(t_list *x)
+{
+    free(x->path1);
+    free(x->path2);
+	ft_free(x->cmd1, 0);
+	ft_free(x->cmd2, 0);	
+}
+
 void	pipex(t_list *x)
 {
 	x->path1 = get_path(x, 2);
 	x->path2 = get_path(x, 3);
-	x->cmd_args1 = cmd_arguments(x->argv, 2);
-	x->cmd_args2 = cmd_arguments(x->argv, 3);
 	x->cmd1 = cmd_arguments(x->argv, 2);
 	x->cmd2 = cmd_arguments(x->argv, 3);
 	if (pipe(x->fd) == -1)
@@ -53,7 +59,7 @@ void	pipex(t_list *x)
 	if (x->id1 == -1)
 		ft_exit("Fork Error");
 	execve_exe(x);
-	return (free(x->path1), free(x->path2));
+	free_all(x);
 }
 
 int	ft_wait(t_list *x)
@@ -87,6 +93,5 @@ int	main(int argc, char **argv, char **env)
 	close(x.fd[0]);
     close(x.fd[1]);
 	exit_status = ft_wait(&x);
-	system("leaks pipex");
 	return (exit_status);
 }
