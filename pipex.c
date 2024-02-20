@@ -6,7 +6,7 @@
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 15:20:41 by achraiti          #+#    #+#             */
-/*   Updated: 2024/02/19 14:08:11 by achraiti         ###   ########.fr       */
+/*   Updated: 2024/02/20 11:50:41 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ void	execve_exe(t_list *x)
 
 void	free_all(t_list *x)
 {
-    free(x->path1);
-    free(x->path2);
+	free(x->path1);
+	free(x->path2);
 	ft_free(x->cmd1, 0);
-	ft_free(x->cmd2, 0);	
+	ft_free(x->cmd2, 0);
 }
 
 void	pipex(t_list *x)
@@ -91,7 +91,7 @@ int	main(int argc, char **argv, char **env)
 	x.env = env;
 	pipex(&x);
 	close(x.fd[0]);
-    close(x.fd[1]);
+	close(x.fd[1]);
 	exit_status = ft_wait(&x);
 	return (exit_status);
 }

@@ -1,13 +1,1 @@
-total 104
--rw-r--r--   1 achraiti  candidates   1300 Feb 18 23:23 Makefile
--rw-r--r--   1 achraiti  candidates      8 Feb 18 21:38 README.md
--rw-r--r--   1 achraiti  candidates      9 Feb 18 22:32 file
--rw-r--r--   1 achraiti  candidates      0 Feb 18 21:38 infile
-drwxr-xr-x  93 achraiti  candidates   3162 Feb 19 13:01 libft
--rw-r--r--   1 achraiti  candidates    394 Feb 19 14:07 outfile
--rwxr-xr-x   1 achraiti  candidates  13824 Feb 19 14:07 pipex
--rw-r--r--   1 achraiti  candidates   2550 Feb 19 14:07 pipex.c
--rw-r--r--   1 achraiti  candidates   1489 Feb 18 22:59 pipex.h
--rw-r--r--   1 achraiti  candidates   2928 Feb 19 14:07 pipex.o
--rw-r--r--   1 achraiti  candidates   1954 Feb 19 14:02 pipex_utils.c
--rw-r--r--   1 achraiti  candidates   2240 Feb 19 14:02 pipex_utils.o
+this is a string
