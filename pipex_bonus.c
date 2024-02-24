@@ -6,7 +6,7 @@
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:41:00 by achraiti          #+#    #+#             */
-/*   Updated: 2024/02/24 14:09:23 by achraiti         ###   ########.fr       */
+/*   Updated: 2024/02/24 16:43:31 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,15 @@ void	execve_1(t_bonus *x)
 }
 
 
-void    execve_last(t_bonus *x)
+void    execve_last(t_bonus *x, int fd[2])
 {
     if (x->id1 == 0)
 	{
 		close(x->fd[1]);
+		close(fd[1]);
 		if (dup2(x->fd_b, 1) == -1)
 			ft_exit("Dup2 Error");
-		if (dup2(x->fd[0], 0) == -1)
+		if (dup2(fd[0], 0) == -1)
 			ft_exit("Dup2 Error");
 		execve(x->path1, x->cmd1, NULL);
 		ft_exit("Execve Error");
@@ -71,14 +72,23 @@ void	pipex_bonus(t_bonus *x)
 	{
         execve_1(x);
 	}
-	if (x->i == x->var)
-        return (execve_last(x));
-	printf("i-->%d var-->%d", x->i, x->var);
-    while (x->var > 0)
+	if (x->i == x->var) // last cmd
+	{
+		x->path1 = get_path_b(x, x->i);
+        x->cmd1 = cmd_arguments(x->argv, x->i);
+        if (pipe(x->fd_mid) == -1)
+			ft_exit("Pipe Error");
+        x->id1 = fork();
+		if (x->id1 == -1)
+        	ft_exit("Fork Error");
+        execve_last(x, x->fd);
+	}
+    while (x->var > x->i) // midles ones
     {
         x->i++;
         x->path1 = get_path_b(x, x->i);
         x->cmd1 = cmd_arguments(x->argv, x->i);
+		printf("%s\n", x->path1);
         if (pipe(x->fd_mid) == -1)
 			ft_exit("Pipe Error");
         x->id1 = fork();
@@ -87,10 +97,20 @@ void	pipex_bonus(t_bonus *x)
         execve_mid(x, x->fd);
         x->fd[0] = x->fd_mid[0];
         x->fd[1] = x->fd_mid[1];
-		x->var--;
+		close(x->fd_mid[0]);
+		close(x->fd_mid[1]);
     }
     if (x->i == x->var)
-        execve_last(x);
+	{
+		x->path1 = get_path_b(x, x->i);
+        x->cmd1 = cmd_arguments(x->argv, x->i);
+        if (pipe(x->fd_mid) == -1)
+			ft_exit("Pipe Error");
+        x->id1 = fork();
+		if (x->id1 == -1)
+        	ft_exit("Fork Error");
+        execve_last(x, x->fd);
+	}
 }
 
 int	ft_wait(t_bonus *x)
@@ -124,5 +144,7 @@ int	main(int argc, char **argv, char **env)
 	close(x.fd[0]);
 	close(x.fd[1]);
 	exit_status = ft_wait(&x);
+	printf("exit status --> %d\n", exit_status);
+	// one of the proccess are exiting NOT succesfuly
 	return (exit_status);
 }
