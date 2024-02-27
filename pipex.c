@@ -6,7 +6,7 @@
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 15:20:41 by achraiti          #+#    #+#             */
-/*   Updated: 2024/02/23 22:30:26 by achraiti         ###   ########.fr       */
+/*   Updated: 2024/02/25 21:40:08 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	execve_exe(t_list *x)
 			ft_exit("Dup2 Error");
 		if (dup2(x->fd[1], 1) == -1)
 			ft_exit("Dup2 Error");
-		execve(x->path1, x->cmd1, x->env);
+		execve(get_path(x, 2), cmd_arguments(x->argv, 2), x->env);
 		ft_exit("Execve Error");
 	}
 	x->id2 = fork();
@@ -34,32 +34,19 @@ void	execve_exe(t_list *x)
 			ft_exit("Dup2 Error");
 		if (dup2(x->fd[0], 0) == -1)
 			ft_exit("Dup2 Error");
-		execve(x->path2, x->cmd2, NULL);
+		execve(get_path(x, 3), cmd_arguments(x->argv, 3), x->env);
 		ft_exit("Execve Error");
 	}
 }
 
-void	free_all(t_list *x)
-{
-	free(x->path1);
-	free(x->path2);
-	ft_free(x->cmd1, 0);
-	ft_free(x->cmd2, 0);
-}
-
 void	pipex(t_list *x)
 {
-	x->path1 = get_path(x, 2);
-	x->path2 = get_path(x, 3);
-	x->cmd1 = cmd_arguments(x->argv, 2);
-	x->cmd2 = cmd_arguments(x->argv, 3);
 	if (pipe(x->fd) == -1)
 		ft_exit("Pipe Error");
 	x->id1 = fork();
 	if (x->id1 == -1)
 		ft_exit("Fork Error");
 	execve_exe(x);
-	free_all(x);
 }
 
 int	ft_wait(t_list *x)
