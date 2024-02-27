@@ -6,7 +6,7 @@
 #    By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/28 15:25:20 by achraiti          #+#    #+#              #
-#    Updated: 2024/02/27 12:44:54 by achraiti         ###   ########.fr        #
+#    Updated: 2024/02/27 15:01:25 by achraiti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ NAME2 = pipex_bonus
 
 SRC =  pipex_utils.c pipex_utils2.c pipex.c
 
-SRC2 = pipex_bonus.c  pipex_bonus_utils.c pipex_utils2.c
+SRC2 =  here_doc.c pipex_bonus_utils.c pipex_utils2.c #pipex_bonus.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -24,7 +24,7 @@ OBJ2 = $(SRC2:.c=.o)
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = #-Wall -Wextra -Werror
 
 INCLUDES = libft/libft.a
 

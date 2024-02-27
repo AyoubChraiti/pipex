@@ -6,7 +6,7 @@
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 15:20:39 by achraiti          #+#    #+#             */
-/*   Updated: 2024/02/26 21:30:59 by achraiti         ###   ########.fr       */
+/*   Updated: 2024/02/27 13:07:43 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PIPEX_H
 
 # include <stdio.h>
+# include <errno.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <string.h>
