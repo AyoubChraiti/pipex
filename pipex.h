@@ -6,7 +6,7 @@
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 15:20:39 by achraiti          #+#    #+#             */
-/*   Updated: 2024/02/27 13:07:43 by achraiti         ###   ########.fr       */
+/*   Updated: 2024/02/27 23:31:26 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ typedef struct s_bonus
 {
 	int			fd1[2];
 	int			fd2[2];
+	int			fd_doc;
+	int			fd_out;
 	int			read_end;
 	pid_t		id1;
 	int			fd_a;

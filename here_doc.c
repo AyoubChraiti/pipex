@@ -6,7 +6,7 @@
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:44:15 by achraiti          #+#    #+#             */
-/*   Updated: 2024/02/27 19:49:15 by achraiti         ###   ########.fr       */
+/*   Updated: 2024/02/27 23:32:47 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,22 @@ void	here_doc(int fd_out, int doc, t_bonus *x)
 			ft_exit("dup eror");
 		if (dup2(fd[1], 1) == -1)
 			ft_exit("dup error");
+		close(fd[1]);
 		execve(get_path_b(x, 3), cmd_arguments(x->argv, 3), x->env);
 		ft_exit("Error in Execve");
 	}
+	unlink("here_doc");
 	id2 = fork();
+	if(id2 == -1)
+		ft_exit("fork error");
 	if(id2 == 0)
 	{
 		close(fd[1]);
-		dup2(fd[0], 0);
-		dup2(fd_out, 1);
+		if (dup2(fd[0], 0) == -1)
+			ft_exit("Dup Error");
+		close(fd[0]);
+		if (dup2(fd_out, 1) == -1)
+			ft_exit("Dup Error");
 		execve(get_path_b(x, 4), cmd_arguments(x->argv, 4), x->env);
 		ft_exit("Error in Execve");
 	}
@@ -55,8 +62,8 @@ int main(int argc, char **argv, char **env)
 
 	x.argv = argv;
 	x.env = env;
-	fd_doc = open("here_doc", O_CREAT | O_RDWR, 0666);
-	fd_out = open(argv[argc - 1], O_CREAT | O_RDWR, 0666);
+	fd_doc = open("here_doc", O_CREAT | O_RDWR, 0777);
+	fd_out = open(argv[argc - 1], O_CREAT | O_RDWR, 0777);
 	if (fd_doc == -1 || fd_out == -1)
 		ft_exit("Open error");
 	line = get_next_line(0);
@@ -71,6 +78,5 @@ int main(int argc, char **argv, char **env)
 	here_doc(fd_out, fd_doc, &x);
 	close(fd_doc);
 	close(fd_out);
-	unlink("here_doc");
 	return 0;
 }
