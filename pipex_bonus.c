@@ -5,118 +5,56 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/23 13:41:00 by achraiti          #+#    #+#             */
-/*   Updated: 2024/02/28 18:39:19 by achraiti         ###   ########.fr       */
+/*   Created: 2024/02/29 13:44:26 by achraiti          #+#    #+#             */
+/*   Updated: 2024/02/29 14:14:34 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	exec_first(t_bonus *x)
+void	here_doc_m(t_bonus *x)
 {
+	char	*line;
+
+	x->fd_b = open(x->argv[x->argc - 1], O_CREAT | O_RDWR, 0777);
+	if (x->fd_b == -1)
+		ft_exit("Open error");
 	if (pipe(x->fd1) == -1)
-		perror("Pipe Error");
-	x->id1 = fork();
-	if (x->id1 == -1)
-		perror("Fork Error");
-	if (x->id1 == 0)
+		ft_exit("Pipe error");
+	line = get_next_line(0);
+	while (1)
 	{
-		close(x->fd1[0]);
-		if (dup2(x->fd_a, 0) == -1)
-			perror("Dup Error");
-		if (dup2(x->fd1[1], 1) == -1)
-			perror("Dup Error");
-		close(x->fd1[1]);
-		execve(get_path_b(x, x->i), ft_split(x->argv[x->i], ' '), x->env);
-		perror("Execve Error");
+		if (ft_strncmp(line, x->argv[2], ft_strlen(x->argv[2])) == 0)
+			break ;
+		write(x->fd1[1], line, ft_strlen(line));
+		free(line);
+		line = get_next_line(0);
 	}
-	dup2(x->fd1[0], 0);
-	close(x->fd1[0]);
-	close(x->fd1[1]);
-	x->i++;
+	her_doc(x);
 }
-
-void exec_midles(t_bonus *x)
-{
-    if (pipe(x->fd2) == -1)
-        perror("Pipe Error");
-    x->id1 = fork();
-    if (x->id1 == -1)
-        perror("Fork Error");
-    if (x->id1 == 0)
-    {
-        close(x->fd2[0]);
-        if (dup2(x->fd2[1], 1) == -1)
-			perror("Dup Error");
-        close(x->fd2[1]);
-        execve(get_path_b(x, x->i), ft_split(x->argv[x->i], ' '), x->env);
-        perror("Execve Error");
-    }
-	dup2(x->fd2[0], 0);
-	close(x->fd2[0]);
-	close(x->fd2[1]);
-    x->i++;
-}
-
-void	exec_last(t_bonus *x)
-{
-	x->id1 = fork();
-	if (x->id1 == -1)
-		perror("Fork Error");
-	if (x->id1 == 0)
-	{
-		if (dup2(x->fd_b, 1) == -1)
-			perror("Dup Error");
-		execve(get_path_b(x, x->i), ft_split(x->argv[x->i], ' '), x->env);
-		perror("Execve Error");
-	}
-	x->i++;
-}
-
-void	pipex_bonus(t_bonus *x)
-{
-	exec_first(x);
-	while (x->var > 0)
-	{
-		exec_midles(x);
-		x->var--;
-	}
-	exec_last(x);
-}
-
-// int	ft_wait()
-// {
-// 	int	status = 0;
-// 	int	res;
-
-// 	res = 0;
-// 	while (wait(&status) > 0)
-// 	{
-// 		res += WEXITSTATUS(status);
-// 		printf("res = %d\n", res);
-// 		status = 0;
-// 	}
-// 	return (res);
-// }
 
 int	main(int argc, char **argv, char **env)
 {
 	t_bonus	x;
-	int		exit_status;
-	
-	if (argc < 5)
-		return (1);
-	x.fd_a = open(argv[1], O_CREAT | O_RDONLY, 0666);
-	x.fd_b = open(argv[argc - 1], O_CREAT | O_WRONLY, 0666);
-	if (x.fd_a == -1 || x.fd_b == -1)
-		ft_exit("Open Error");
+
 	x.argv = argv;
 	x.env = env;
-    x.var = argc - 5;
-    x.i = 2;
-	pipex_bonus(&x);
-	close(x.fd_a);
-	close(x.fd_b);
-	// exit_status = ft_wait();
-	// return (exit_status);
+	x.argc = argc;
+	if (argc < 5)
+		return (1);
+	if (argc == 6 && ft_strncmp(argv[1], "here_doc", 8) == 0)
+		here_doc_m(&x);
+	else
+	{
+		x.fd_a = open(argv[1], O_CREAT | O_RDONLY, 0666);
+		x.fd_b = open(argv[argc - 1], O_CREAT | O_WRONLY, 0666);
+		if (x.fd_a == -1 || x.fd_b == -1)
+			ft_exit("Open Error");
+		x.var = argc - 5;
+		x.i = 2;
+		pipex_bonus(&x);
+		close(x.fd_a);
+		close(x.fd_b);
+	}
+	return (0);
 }
