@@ -6,7 +6,7 @@
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 13:44:26 by achraiti          #+#    #+#             */
-/*   Updated: 2024/03/02 14:36:55 by achraiti         ###   ########.fr       */
+/*   Updated: 2024/03/02 18:31:11 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ int wait_(t_bonus *x)
 	int status;
 	
 	res = 0;
-	while (x->ind > 0)
+	while (x->ind - 1 > 0)
 	{
-		if (waitpid(x->arr[x->ind], &status, 0) == -1)
+		waitpid(x->arr[x->ind], &status, 0);
 		if (WIFEXITED(status))
 		{
 			if (WEXITSTATUS(status))
