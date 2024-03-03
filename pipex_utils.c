@@ -6,7 +6,7 @@
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 14:28:46 by achraiti          #+#    #+#             */
-/*   Updated: 2024/02/19 15:44:12 by achraiti         ###   ########.fr       */
+/*   Updated: 2024/03/03 11:16:05 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ char	**get_path_helper(t_list *x)
 	int		i;
 
 	i = 0;
+	tmp = NULL;
 	x->path_var = get_env(x->env);
 	s = ft_split(x->path_var, ':');
 	while (s[i] != NULL)

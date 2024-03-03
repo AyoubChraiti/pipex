@@ -6,7 +6,7 @@
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 15:20:41 by achraiti          #+#    #+#             */
-/*   Updated: 2024/03/02 14:37:05 by achraiti         ###   ########.fr       */
+/*   Updated: 2024/03/03 11:24:41 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	execve_exe(t_list *x)
 			ft_exit("Dup2 Error");
 		if (dup2(x->fd[1], 1) == -1)
 			ft_exit("Dup2 Error");
+		close(x->fd[1]);
 		execve(get_path(x, 2), cmd_arguments(x->argv, 2), x->env);
 		ft_exit("Execve Error");
 	}
@@ -34,6 +35,7 @@ void	execve_exe(t_list *x)
 			ft_exit("Dup2 Error");
 		if (dup2(x->fd[0], 0) == -1)
 			ft_exit("Dup2 Error");
+		close(x->fd[0]);
 		execve(get_path(x, 3), cmd_arguments(x->argv, 3), x->env);
 		ft_exit("Execve Error");
 	}
@@ -66,7 +68,6 @@ int	ft_wait(t_list *x)
 int	main(int argc, char **argv, char **env)
 {
 	t_list	x;
-	int		exit_status;
 
 	if (argc != 5)
 		exit(EXIT_FAILURE);
@@ -79,6 +80,5 @@ int	main(int argc, char **argv, char **env)
 	pipex(&x);
 	close(x.fd[0]);
 	close(x.fd[1]);
-	exit_status = ft_wait(&x);
-	return (exit_status);
+	return (ft_wait);
 }

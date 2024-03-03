@@ -6,7 +6,7 @@
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:41:00 by achraiti          #+#    #+#             */
-/*   Updated: 2024/03/01 22:31:50 by achraiti         ###   ########.fr       */
+/*   Updated: 2024/03/03 11:36:19 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ void	exec_last(t_bonus *x)
 
 void	pipex_bonus(t_bonus *x)
 {
-	x->flag = 0;
 	exec_first(x);
 	while (x->var > 0)
 	{

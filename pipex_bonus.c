@@ -6,7 +6,7 @@
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 13:44:26 by achraiti          #+#    #+#             */
-/*   Updated: 2024/03/02 18:31:11 by achraiti         ###   ########.fr       */
+/*   Updated: 2024/03/03 11:34:43 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ void	here_doc_m(t_bonus *x)
 		ft_exit("Open error");
 	if (pipe(x->fd1) == -1)
 		ft_exit("Pipe error");
-	write(0, "pipe heredoc> ", 15);
+	write(1, "pipe heredoc> ", 15);
 	line = get_next_line(0);
 	while (1)
 	{
 		if (ft_strncmp(line, x->argv[2], ft_strlen(x->argv[2])) == 0
 			&& ft_strlen(line) - 1 == ft_strlen(x->argv[2]))
 			break ;
-		write(0, "pipe heredoc> ", 15);
+		write(1, "pipe heredoc> ", 15);
 		write(x->fd1[1], line, ft_strlen(line));
 		free(line);
 		line = get_next_line(0);

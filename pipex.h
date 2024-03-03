@@ -6,7 +6,7 @@
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 15:20:39 by achraiti          #+#    #+#             */
-/*   Updated: 2024/03/01 22:29:59 by achraiti         ###   ########.fr       */
+/*   Updated: 2024/03/03 11:36:44 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ typedef struct s_bonus
 	int			read_end;
 	pid_t		id1;
 	pid_t		id2;
-	int			flag;
 	int			fd_a;
 	int			fd_b;
 	char		**argv;
