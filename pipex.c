@@ -6,7 +6,7 @@
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 15:20:41 by achraiti          #+#    #+#             */
-/*   Updated: 2024/03/03 11:24:41 by achraiti         ###   ########.fr       */
+/*   Updated: 2024/03/07 12:57:39 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,5 @@ int	main(int argc, char **argv, char **env)
 	pipex(&x);
 	close(x.fd[0]);
 	close(x.fd[1]);
-	return (ft_wait);
+	return (ft_wait(&x));
 }
