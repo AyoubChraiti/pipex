@@ -6,7 +6,7 @@
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 13:44:26 by achraiti          #+#    #+#             */
-/*   Updated: 2024/03/03 11:34:43 by achraiti         ###   ########.fr       */
+/*   Updated: 2024/03/10 13:27:51 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	here_doc_m(t_bonus *x)
 {
 	char	*line;
 
-	x->fd_b = open(x->argv[x->argc - 1], O_CREAT | O_RDWR, 0644);
+	x->fd_b = open(x->argv[x->argc - 1], O_CREAT | O_RDWR | O_APPEND, 0644);
 	if (x->fd_b == -1)
 		ft_exit("Open error");
 	if (pipe(x->fd1) == -1)
@@ -32,7 +32,7 @@ void	here_doc_m(t_bonus *x)
 		write(x->fd1[1], line, ft_strlen(line));
 		free(line);
 		line = get_next_line(0);
-	}
+	} 
 	her_doc(x);
 }
 
