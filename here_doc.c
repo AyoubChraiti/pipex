@@ -6,7 +6,7 @@
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:44:15 by achraiti          #+#    #+#             */
-/*   Updated: 2024/02/29 14:16:19 by achraiti         ###   ########.fr       */
+/*   Updated: 2024/03/13 16:25:04 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	her_doc(t_bonus *x)
 	{
 		close(x->fd2[1]);
 		if (dup2(x->fd2[0], 0) == -1)
+		
 			ft_exit("Dup Error");
 		if (dup2(x->fd_b, 1) == -1)
 			ft_exit("Dup Error");
