@@ -6,7 +6,7 @@
 #    By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/28 15:25:20 by achraiti          #+#    #+#              #
-#    Updated: 2024/02/29 14:10:09 by achraiti         ###   ########.fr        #
+#    Updated: 2024/03/17 17:11:42 by achraiti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,10 @@ fclean: clean
 	rm -rf libft/libft.a
 	rm -rf $(NAME)
 	rm -rf $(NAME2)
+
+push:
+	git commit -am "update"
+	git push
 
 re: fclean all
 

@@ -6,7 +6,7 @@
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 15:45:32 by achraiti          #+#    #+#             */
-/*   Updated: 2024/02/24 16:40:24 by achraiti         ###   ########.fr       */
+/*   Updated: 2024/03/17 02:01:19 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	ft_free(char **s, int f)
 {
 	int	i;
 
+	if (!s)
+		return ;
 	if (f)
 		i = 1;
 	else
@@ -25,10 +27,12 @@ void	ft_free(char **s, int f)
 	free(s);
 }
 
-char	**cmd_arguments(char **argv, int t)
+char	**cmd_arguments(char **argv, int t, char *if_null)
 {
 	char	**sp;
 
+	if (!if_null)
+		return (NULL);
 	sp = ft_split(argv[t], ' ');
 	return (sp);
 }

@@ -6,7 +6,7 @@
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 15:20:39 by achraiti          #+#    #+#             */
-/*   Updated: 2024/03/12 14:11:00 by achraiti         ###   ########.fr       */
+/*   Updated: 2024/03/17 16:39:07 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ typedef struct s_bonus
 	char		**cmd1;
 	int			argc;
 	int			*arr;
-	int			ind;
 }			t_bonus;
 
 typedef struct s_list
@@ -66,7 +65,7 @@ typedef struct s_list
 }			t_list;
 
 char	*get_env(char **env);
-char	**cmd_arguments(char **argv, int t);
+char	**cmd_arguments(char **argv, int t, char *if_null);
 void	ft_exit(char *err_msg);
 void	ft_free(char **s, int f);
 char	*get_path(t_list *x, int t);

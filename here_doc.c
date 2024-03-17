@@ -6,7 +6,7 @@
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:44:15 by achraiti          #+#    #+#             */
-/*   Updated: 2024/03/13 16:25:04 by achraiti         ###   ########.fr       */
+/*   Updated: 2024/03/17 16:58:14 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void	norm_func(t_bonus *x)
 		if (dup2(x->fd2[1], 1) == -1)
 			ft_exit("Dup error");
 		close(x->fd2[0]);
-		execve(get_path_b(x, 3), cmd_arguments(x->argv, 3), x->env);
+		execve(get_path_b(x, 3),
+			cmd_arguments(x->argv, 3, get_path_b(x, 3)), x->env);
 		ft_exit("Execve Error");
 	}
 	close(x->fd1[0]);
@@ -46,11 +47,11 @@ void	her_doc(t_bonus *x)
 	{
 		close(x->fd2[1]);
 		if (dup2(x->fd2[0], 0) == -1)
-		
 			ft_exit("Dup Error");
 		if (dup2(x->fd_b, 1) == -1)
 			ft_exit("Dup Error");
-		execve(get_path_b(x, 4), cmd_arguments(x->argv, 4), x->env);
+		execve(get_path_b(x, 4),
+			cmd_arguments(x->argv, 4, get_path_b(x, 3)), x->env);
 		ft_exit("Execve Error");
 	}
 	close(x->fd2[0]);

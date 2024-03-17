@@ -6,11 +6,24 @@
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 15:20:41 by achraiti          #+#    #+#             */
-/*   Updated: 2024/03/10 12:59:08 by achraiti         ###   ########.fr       */
+/*   Updated: 2024/03/17 18:02:38 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+void	second_child(t_list *x)
+{
+	close(x->fd[1]);
+	if (dup2(x->fd_b, 1) == -1)
+		ft_exit("Dup2 Error");
+	if (dup2(x->fd[0], 0) == -1)
+		ft_exit("Dup2 Error");
+	close(x->fd[0]);
+	execve(get_path(x, 3),
+		cmd_arguments(x->argv, 3, get_path(x, 3)), x->env);
+	ft_exit("Execve Error");
+}
 
 void	execve_exe(t_list *x)
 {
@@ -22,7 +35,8 @@ void	execve_exe(t_list *x)
 		if (dup2(x->fd[1], 1) == -1)
 			ft_exit("Dup2 Error");
 		close(x->fd[1]);
-		execve(get_path(x, 2), cmd_arguments(x->argv, 2), x->env);
+		execve(get_path(x, 2),
+			cmd_arguments(x->argv, 2, get_path(x, 2)), x->env);
 		ft_exit("Execve Error");
 	}
 	x->id2 = fork();
@@ -30,14 +44,7 @@ void	execve_exe(t_list *x)
 		ft_exit("Fork Error");
 	if (x->id2 == 0)
 	{
-		close(x->fd[1]);
-		if (dup2(x->fd_b, 1) == -1)
-			ft_exit("Dup2 Error");
-		if (dup2(x->fd[0], 0) == -1)
-			ft_exit("Dup2 Error");
-		close(x->fd[0]);
-		execve(get_path(x, 3), cmd_arguments(x->argv, 3), x->env);
-		ft_exit("Execve Error");
+		second_child(x);
 	}
 }
 
@@ -54,15 +61,19 @@ void	pipex(t_list *x)
 int	ft_wait(t_list *x)
 {
 	int	status1;
-	int	status2;
-	int	res;
+	int	f;
 
-	res = 0;
-	waitpid(x->id1, &status1, 0);
-	waitpid(x->id2, &status2, 0);
-	if (WEXITSTATUS(status1) || WEXITSTATUS(status2))
-		res = WEXITSTATUS(status1) + WEXITSTATUS(status2);
-	return (res);
+	f = 0;
+	if (waitpid(x->id2, &status1, 0) > 0)
+	{
+		if (WIFEXITED(status1))
+			f = 1;
+	}
+	while (wait(NULL) > 0)
+		;
+	if (f == 1)
+		return (WEXITSTATUS(status1));
+	return (0);
 }
 
 int	main(int argc, char **argv, char **env)

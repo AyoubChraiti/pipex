@@ -6,7 +6,7 @@
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 15:20:36 by achraiti          #+#    #+#             */
-/*   Updated: 2023/12/19 14:14:43 by achraiti         ###   ########.fr       */
+/*   Updated: 2024/03/15 21:17:21 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,9 @@ char	**ft_split(char const *s, char c)
 	char	**str;
 	size_t	count;
 
-	count = word_count(s, c);
-	str = (char **)malloc((count + 1) * sizeof(char *));
+	if (!s)
+		return (NULL);
+	str = (char **)malloc((word_count(s, c) + 1) * sizeof(char *));
 	if (!str)
 		return (NULL);
 	count = 0;

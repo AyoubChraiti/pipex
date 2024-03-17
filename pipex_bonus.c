@@ -6,7 +6,7 @@
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 13:44:26 by achraiti          #+#    #+#             */
-/*   Updated: 2024/03/10 13:27:51 by achraiti         ###   ########.fr       */
+/*   Updated: 2024/03/17 16:54:41 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,49 +27,52 @@ void	here_doc_m(t_bonus *x)
 	{
 		if (ft_strncmp(line, x->argv[2], ft_strlen(x->argv[2])) == 0
 			&& ft_strlen(line) - 1 == ft_strlen(x->argv[2]))
+		{
+			free(line);
 			break ;
+		}
 		write(1, "pipe heredoc> ", 15);
 		write(x->fd1[1], line, ft_strlen(line));
 		free(line);
 		line = get_next_line(0);
-	} 
+	}
 	her_doc(x);
 }
 
 int	ft_wait(t_bonus *x)
 {
 	int	status1;
-	int	status2;
-	int	res;
+	int	f;
 
-	res = 0;
-	waitpid(x->id1, &status1, 0);
-	waitpid(x->id2, &status2, 0);
-	if (WEXITSTATUS(status1) || WEXITSTATUS(status2))
-		res = WEXITSTATUS(status1) + WEXITSTATUS(status2);
-	return (res);
+	f = 0;
+	if (waitpid(x->id2, &status1, 0) > 0)
+	{
+		if (WIFEXITED(status1))
+			f = 1;
+	}
+	while (wait(NULL) > 0)
+		;
+	if (f == 1)
+		return (WEXITSTATUS(status1));
+	return (0);
 }
 
-int wait_(t_bonus *x)
+int	wait_(t_bonus *x)
 {
-	int res;
-	int status;
-	
-	res = 0;
-	while (x->ind - 1 > 0)
+	int	status;
+	int	f;
+
+	f = 0;
+	if (waitpid(x->arr[0], &status, 0) > 0)
 	{
-		waitpid(x->arr[x->ind], &status, 0);
-		if (WIFEXITED(status))
-		{
-			if (WEXITSTATUS(status))
-			{
-				res = WEXITSTATUS(status);
-				break ;
-			}
-		}
-		x->ind--;
+		if (WEXITSTATUS(status))
+			f = 1;
 	}
-	return (res);
+	while (wait(NULL) > 0)
+		;
+	if (f == 1)
+		return (WEXITSTATUS(status));
+	return (0);
 }
 
 void	inisilaze(t_bonus *x, char **argv, char **env, int argc)
@@ -77,8 +80,7 @@ void	inisilaze(t_bonus *x, char **argv, char **env, int argc)
 	x->argv = argv;
 	x->env = env;
 	x->argc = argc;
-	x->arr = (int *)malloc(sizeof(int) * argc - 3);
-	x->ind = 0;
+	x->arr = (int *)malloc(sizeof(int));
 	x->var = argc - 5;
 	x->i = 2;
 }
