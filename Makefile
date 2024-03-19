@@ -6,7 +6,7 @@
 #    By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/28 15:25:20 by achraiti          #+#    #+#              #
-#    Updated: 2024/03/17 21:24:32 by achraiti         ###   ########.fr        #
+#    Updated: 2024/03/17 17:11:42 by achraiti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,8 +56,7 @@ fclean: clean
 	rm -rf $(NAME2)
 
 push:
-	git add .
-	git commit -m "update"
+	git commit -am "update"
 	git push
 
 re: fclean all

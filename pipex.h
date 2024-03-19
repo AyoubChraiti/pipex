@@ -6,7 +6,7 @@
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 15:20:39 by achraiti          #+#    #+#             */
-/*   Updated: 2024/03/17 16:39:07 by achraiti         ###   ########.fr       */
+/*   Updated: 2024/03/19 20:29:09 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,6 @@ void	exec_midles(t_bonus *x);
 void	exec_first(t_bonus *x);
 void	her_doc(t_bonus *x);
 void	here_doc_m(t_bonus *x);
+void	ft_exit_b(char *err_msg, t_bonus *x);
 
 #endif

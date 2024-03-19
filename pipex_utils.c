@@ -6,7 +6,7 @@
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 14:28:46 by achraiti          #+#    #+#             */
-/*   Updated: 2024/03/17 02:44:22 by achraiti         ###   ########.fr       */
+/*   Updated: 2024/03/19 20:11:29 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*get_path(t_list *x, int t)
 	int		i;
 
 	i = 0;
+	if (ft_strlen (x->argv[t]) == 0)
+		return (NULL);
 	x->cmd = ft_split(x->argv[t], ' ');
 	if (x->cmd[0] == NULL)
 		return (NULL);

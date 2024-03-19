@@ -6,7 +6,7 @@
 /*   By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 15:20:41 by achraiti          #+#    #+#             */
-/*   Updated: 2024/03/17 18:02:38 by achraiti         ###   ########.fr       */
+/*   Updated: 2024/03/19 20:10:54 by achraiti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	main(int argc, char **argv, char **env)
 	x.fd_a = open(argv[1], O_RDONLY);
 	x.fd_b = open(argv[4], O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (x.fd_a == -1 || x.fd_b == -1)
-		ft_exit("Open Error");
+		perror("Open Error");
 	x.argv = argv;
 	x.env = env;
 	pipex(&x);
