@@ -6,7 +6,7 @@
 #    By: achraiti <achraiti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/28 15:25:20 by achraiti          #+#    #+#              #
-#    Updated: 2024/03/17 17:11:42 by achraiti         ###   ########.fr        #
+#    Updated: 2024/03/21 01:31:14 by achraiti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,9 +14,15 @@ NAME = pipex
 
 NAME2 = pipex_bonus
 
-SRC =  pipex_utils.c pipex_utils2.c pipex.c
+SRC_D = src
 
-SRC2 = pipex_bonus.c pipex_bonus_utils.c pipex_utils2.c pipex_bonus2.c here_doc.c
+BONUS = bonus
+
+SRC = $(SRC_D)/utils.c $(SRC_D)/utils2.c $(SRC_D)/pipex.c
+
+SRC2 = $(BONUS)/bonus.c $(BONUS)/utils.c \
+	$(BONUS)/utils2.c $(BONUS)/bonus2.c \
+	$(BONUS)/here_doc.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -56,9 +62,12 @@ fclean: clean
 	rm -rf $(NAME2)
 
 push:
-	git commit -am "update"
+	git add .
+	git commit -m "update"
 	git push
 
 re: fclean all
 
 .PHONY: clean re all fclean
+
+.SECONDARY: $(OBJ) $(OBJ2)
